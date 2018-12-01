@@ -17,11 +17,11 @@ def main():
     start_time = time.time()
     n = 7
     x = 0
-    l = list(primesfrom2to(1000000000))
+    l = list(primesfrom2to(10000000))
     sl = set(l)
     print("Done")
-    while (n < 1000000000):
-        if((n-l[x]/2) in sl):
+    while (n < 10000000):
+        if(n-(2*l[x]) in sl):
             n = n+2
             x = 0
         x = x + 1
