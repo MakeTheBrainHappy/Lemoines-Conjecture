@@ -1,5 +1,5 @@
 """
-Description: Traditional Implementation of Lemoine's Conjecture
+Description: Lemoine's Conjecture Implementation with Lists
 """
 
 import numpy as np
@@ -19,20 +19,26 @@ def primesfrom2to(n):
 
 def main():
     start_time = time.time()
-    n = 7
-    x = 0
-    l = list(primesfrom2to(100000))
-    sl = set(l)
-    print("Done")
+
+    l = primesfrom2to(1000000)
+    
+    nums = range(5,100000,2)
+    
     print("--- %s seconds ---" % (time.time() - start_time))            
 
-    while (n < 100000):
-        if(n-(2*l[x]) in sl):
-            n = n+2
-            x = 0
+    x = 0
+    
+    while(len(nums) != 0):
+        temp = []
+        for i in range(0,len(nums)):
+            if (nums[i]-2*l[x] not in l):
+                temp.append(nums[i])
+        nums = temp
         x = x + 1
-    print("Done 2")  
+            
     print("--- %s seconds ---" % (time.time() - start_time))            
+
+
     
 main()
 

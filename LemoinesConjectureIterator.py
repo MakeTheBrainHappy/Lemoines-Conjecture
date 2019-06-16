@@ -1,9 +1,10 @@
 """
-Description: Traditional Implementation of Lemoine's Conjecture
+Description: Lemoine's Conjecture Implemented with Python Iterators 
 """
 
-import numpy as np
 import time
+import numpy as np
+from sympy import sieve,primerange 
 
 def primesfrom2to(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
@@ -19,20 +20,17 @@ def primesfrom2to(n):
 
 def main():
     start_time = time.time()
-    n = 7
-    x = 0
-    l = list(primesfrom2to(100000))
-    sl = set(l)
-    print("Done")
+    k = primesfrom2to(10000000)
+    p = set(k)
+    l = np.nditer(k)
     print("--- %s seconds ---" % (time.time() - start_time))            
 
-    while (n < 100000):
-        if(n-(2*l[x]) in sl):
-            n = n+2
-            x = 0
-        x = x + 1
-    print("Done 2")  
+    n = 7
+    while (n < 10000000):
+       if(n - 2*l.next() in p):
+           n = n+2  
+           l.reset()
     print("--- %s seconds ---" % (time.time() - start_time))            
+
     
 main()
-
