@@ -1,9 +1,10 @@
 """
-Description: Traditional Implementation of Lemoine's Conjecture
+Description: New strategy to tackle verifying Lemoine's conjecture
 """
 
 import numpy as np
 import time
+from operator import add
 
 def primesfrom2to(n):
     # https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
@@ -17,22 +18,18 @@ def primesfrom2to(n):
             sieve[(k*k+4*k-2*k*(i&1))/3::2*k] = False
     return np.r_[2,3,((3*np.nonzero(sieve)[0]+1)|1)]
 
+def cartesian_add(arr1, arr2):
+    arr1_e = np.repeat(np.expand_dims(arr1, 1), arr2.size, axis=1)
+    arr2_e = np.repeat(np.expand_dims(arr2,  0), arr1.size, axis=0)
+    return arr1_e + arr2_e
+
 def main():
     start_time = time.time()
-    n = 7
-    x = 0
-    l = list(primesfrom2to(1000000000))
-    sl = set(l)
-    print("Done")
-    print("--- %s seconds ---" % (time.time() - start_time))            
-
-    while (n < 1000000000):
-        if(n-(2*l[x]) in sl):
-            n = n+2
-            x = 0
-        x = x + 1
-    print("Done 2")  
-    print("--- %s seconds ---" % (time.time() - start_time))            
-    
+    list1 = primesfrom2to(1000000)
+    list2 = 2 * list1
+    list4 = np.arange(7,3000000,2)
+    list4 = np.setdiff1d(list4,np.unique(cartesian_add(list1, list2)))
+    print(list4)    
+    print("--- %s seconds ---" % (time.time() - start_time))
+  
 main()
-
